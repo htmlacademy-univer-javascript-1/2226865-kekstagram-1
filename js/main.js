@@ -66,11 +66,11 @@ function randomArrayElement(array) {
   return array[random(0, array.length - 1)];
 }
 
-function random(min, max) {
-  if (min > max) {
-    return null;
-  }
-  return Math.floor(Math.random() * (max - min) + min) + 1;
+function random (min, max) {
+  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
+  const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
+  const result = Math.random() * (upper - lower + 1) + lower;
+  return Math.floor(result);
 }
 
 function stringByPattern(pattern, i) {
@@ -80,8 +80,8 @@ function stringByPattern(pattern, i) {
 }
 
 // eslint-disable-next-line no-unused-vars
-function checkString(string, maxLength) {
-  return String(string).length <= maxLength;
+function checkStringLength(string, maxLength) {
+  return string.length <= length;
 }
 
 // eslint-disable-next-line no-console
