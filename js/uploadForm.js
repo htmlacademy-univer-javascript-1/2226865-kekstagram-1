@@ -19,7 +19,7 @@ uploadPhotoInput.addEventListener('change', () => {
 
 closeFormButton.addEventListener('click', closeForm);
 document.addEventListener('keydown', (evt) => {
-  if (evt.keyCode === ESC_KEYCODE) {
+  if (evt.keyCode === ESC_KEYCODE && !(evt.target.matches('input') || evt.target.matches('textarea'))) {
     evt.preventDefault();
     closeForm();
   }
@@ -27,7 +27,7 @@ document.addEventListener('keydown', (evt) => {
 
 function closeForm() {
   document.body.classList.remove('modal-open');
-  form.classList.add('hidden');
+  imgEditBlock.classList.add('hidden');
   uploadPhotoInput.name = '';
   imgDescriptionInput.value = '';
   hashtagsInput.value = '';
