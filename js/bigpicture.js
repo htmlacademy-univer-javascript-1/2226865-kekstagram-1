@@ -1,6 +1,7 @@
 const ESC_KEYCODE = 27;
 
 const bigPicture = document.querySelector('.big-picture');
+const closePictureButton = document.querySelector('.big-picture__cancel');
 const pictureImg = bigPicture.querySelector('.big-picture__img').querySelector('img');
 const pictureLikesCount = bigPicture.querySelector('.likes-count');
 const pictureDescription = bigPicture.querySelector('.social__caption');
@@ -12,10 +13,9 @@ const closeBigPicture = () => {
   bigPicture.classList.add('hidden');
 };
 
-bigPicture.querySelector('.social__comment-count').classList.add('hidden');
-bigPicture.addEventListener('click', closeBigPicture);
-document.addEventListener('keydown', (evnt) => {
-  if (evnt.keyCode === ESC_KEYCODE) {
+closePictureButton.addEventListener('click', closeBigPicture);
+document.addEventListener('keydown', (evt) => {
+  if (evt.keyCode === ESC_KEYCODE) {
     closeBigPicture();
   }
 });
