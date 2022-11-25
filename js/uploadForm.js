@@ -2,7 +2,7 @@ import {checkStringLength} from './util.js';
 import '../pristine/pristine.min.js';
 
 const ESC_KEYCODE = 27;
-const HASHTAG_REGEXP = /#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
+const HASHTAG_REGEXP = '#[A-Za-zА-Яа-яЁё0-9]{1,19}';
 
 const form = document.querySelector('.img-upload__form');
 const uploadPhotoInput = document.querySelector('#upload-file');
@@ -26,34 +26,12 @@ form.addEventListener('submit', (evt) => {
   }
 });
 
-
 uploadPhotoInput.addEventListener('change', () => {
   imgEditBlock.classList.remove('hidden');
   document.body.classList.add('modal-open');
 });
 
-const closeForm = () => {
-  document.body.classList.remove('modal-open');
-  form.classList.add('hidden');
-  uploadPhotoInput.name = '';
-  imgDescriptionInput.value = '';
-  hashtagsInput.value = '';
-};
-
-function validateHashTag(value) {
-  if (!value) {
-    return true;
-  }
-  const hashtags = value.split(/\s+/);
-  for (const hashtag of hashtags) {
-    if (!HASHTAG_REGEXP.test(hashtag)) {
-      return false;
-    }
-  }
-  return true;
-}
-
-pristine.addValidator(hashtagsInput, validateHashTag, 'Некорректный ввод хэш-тегов');
+pristine.addValidator(hashtagsInput, validateHashtags, 'Некорректный ввод хэш-тегов');
 pristine.addValidator(imgDescriptionInput, (value) => checkStringLength(value, 140),
   'Длина комментария не должна превышать 140 символов');
 
@@ -65,3 +43,31 @@ document.addEventListener('keydown', (evt) => {
     closeForm();
   }
 });
+
+function closeForm() {
+  document.body.classList.remove('modal-open');
+  form.classList.add('hidden');
+  uploadPhotoInput.name = '';
+  imgDescriptionInput.value = '';
+  hashtagsInput.value = '';
+}
+
+function validateHashtags(hashtagsString) {
+  if (hashtagsString.length === 0) {
+    return true;
+  }
+  const hashtagsRegexp = new RegExp(`^${HASHTAG_REGEXP}( ${HASHTAG_REGEXP})*$`);
+  if (!hashtagsRegexp.test(hashtagsString)) {
+    return false;
+  }
+  const hashtagsSet = new Set();
+  const hashtags = hashtagsString.split(/ /);
+  for (const hashtag of hashtags) {
+    const loweredCase = hashtag.toLowerCase();
+    if (hashtagsSet.has(loweredCase)) {
+      return false;
+    }
+    hashtagsSet.add(loweredCase);
+  }
+  return true;
+}
