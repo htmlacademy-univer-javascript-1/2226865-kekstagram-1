@@ -6,21 +6,19 @@ const loadCommentsButton = bigPicture.querySelector('.social__comments-loader');
 const commentsCountBlock = bigPicture.querySelector('.social__comment-count');
 const commentsRenderedCount = commentsCountBlock.querySelector('span:nth-child(1)');
 const commentsTotalCount = commentsCountBlock.querySelector('span:nth-child(2)');
+const exampleComment = document.querySelector('.social__comment');
 
 let currentPhotoComments;
 
-//TODO fix
-const layoutForComment = (comment) =>
-  '<li class="social__comment">\n' +
-  '    <img\n' +
-  '        class="social__picture"\n' +
-  `        src="${comment.avatar}"` +
-  `        alt="${comment.name}"` +
-  '        width="35" height="35">\n' +
-  `    <p class="social__text">${comment.message}}</p>\n` +
-  '</li>';
-
-//TODO bring functions to the same kind
+function createComment(commentObj) {
+  const comment = exampleComment.cloneNode(true);
+  const avatar = comment.querySelector('img');
+  const message = comment.querySelector('p');
+  avatar.src = commentObj.avatar;
+  avatar.alt = commentObj.name;
+  message.textContent = commentObj.message;
+  return comment;
+}
 
 loadCommentsButton.addEventListener('click', (evt) => {
   const alreadyRendered = parseInt(commentsRenderedCount.textContent, 10);
@@ -34,8 +32,8 @@ function renderBatchOfComments(comments) {
   const notRendered = comments.length - alreadyRendered;
   const toRender = Math.min(COMMENTS_PER_LOADING, notRendered);
   for (let i = alreadyRendered; i < alreadyRendered + toRender; i++) {
-    const commentLayout = layoutForComment(comments[i]);
-    commentsBlock.insertAdjacentHTML('beforeend', commentLayout);
+    const comment = createComment(comments[i]);
+    commentsBlock.append(comment);
   }
   return toRender;
 }
