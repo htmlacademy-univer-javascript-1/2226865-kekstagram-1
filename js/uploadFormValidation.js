@@ -37,7 +37,7 @@ function validateHashtags(hashtagsString) {
     }
     hashtagsSet.add(loweredCase);
   }
-  return true;
+  return hashtagsSet.size <= 5;
 }
 
 function validateForm() {
