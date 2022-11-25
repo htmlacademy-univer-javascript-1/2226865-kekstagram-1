@@ -1,5 +1,6 @@
 import {random, randomArrayElement, stringByPattern} from './util.js';
 
+const MAX_COMMENTS_PER_POST = 10;
 const SENTENCES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -47,7 +48,7 @@ const createComment = () => {
   };
 };
 
-const createComments = () => Array.from({length: random(1, 3)}, createComment);
+const createComments = () => Array.from({length: random(1, MAX_COMMENTS_PER_POST)}, createComment);
 
 const createPost = () => ({
   id: random(1, 25),
