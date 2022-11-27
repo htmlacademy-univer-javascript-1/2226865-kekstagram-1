@@ -1,4 +1,6 @@
 import {form, hashtagsInput, imgDescriptionInput, validateForm} from './uploadFormValidation.js';
+import './photoEffects.js';
+import './photoScaling.js';
 
 const ESC_KEYCODE = 27;
 
