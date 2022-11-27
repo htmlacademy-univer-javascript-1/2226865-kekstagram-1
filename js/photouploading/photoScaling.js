@@ -1,9 +1,9 @@
+import {form, imagePreview} from './common.js';
+
 const SCALE_MIN = 25;
 const SCALE_MAX = 100;
 const SCALE_STEP = 25;
 
-const form = document.querySelector('.img-upload__form');
-const imagePreview = form.querySelector('.img-upload__preview');
 const scaleField = form.querySelector('.img-upload__scale');
 const scaleValue = scaleField.querySelector('.scale__control--value');
 const decreaseScaleButton = scaleField.querySelector('.scale__control--smaller');

@@ -1,7 +1,7 @@
-import {checkStringLength} from './util.js';
-import '../pristine/pristine.min.js';
+import {form} from './common.js';
+import {checkStringLength} from '../util.js';
+import '../../pristine/pristine.min.js';
 
-const form = document.querySelector('.img-upload__form');
 const hashtagsInput = document.querySelector('.text__hashtags');
 const imgDescriptionInput = document.querySelector('.text__description');
 
@@ -44,4 +44,4 @@ function validateForm() {
   return pristine.validate();
 }
 
-export {form, hashtagsInput, imgDescriptionInput, validateForm};
+export {hashtagsInput, imgDescriptionInput, validateForm};

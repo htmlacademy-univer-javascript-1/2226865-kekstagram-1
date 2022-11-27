@@ -1,9 +1,8 @@
-import '../nouislider/nouislider.js';
+import '../../nouislider/nouislider.js';
+import {form, imagePreview} from './common.js';
 
-const form = document.querySelector('.img-upload__form');
 const slider = form.querySelector('.effect-level__slider');
 const effectLevel = form.querySelector('.effect-level__value');
-const imgPreview = form.querySelector('.img-upload__preview');
 
 const effectInfos = {
   'chrome': makeEffectInfo('grayscale', '', 0, 1, 0, 0.1),
@@ -21,7 +20,7 @@ noUiSlider.create(slider, currentEffectInfo.sliderOptions);
 slider.noUiSlider.on('update', () => {
   const value = slider.noUiSlider.get();
   const filterInfo = currentEffectInfo.filterInfo;
-  imgPreview.style.filter = styleForFilter(filterInfo, value);
+  imagePreview.style.filter = styleForFilter(filterInfo, value);
   effectLevel.value = value.toString();
 });
 
@@ -32,7 +31,7 @@ form.addEventListener('change', (evt) => {
   const newEffect = evt.target.value;
   changeEffectClass(newEffect);
   if (newEffect === 'none') {
-    imgPreview.style.filter = 'none';
+    imagePreview.style.filter = 'none';
     slider.classList.add('hidden');
     return;
   }
@@ -49,8 +48,8 @@ function styleForFilter(filterInfo, value) {
 
 function changeEffectClass(newEffectName) {
   const newEffectClass = `effects__preview--${newEffectName}`;
-  imgPreview.classList.remove(currentEffectClass);
-  imgPreview.classList.add(newEffectClass);
+  imagePreview.classList.remove(currentEffectClass);
+  imagePreview.classList.add(newEffectClass);
   currentEffectClass = newEffectClass;
 }
 
