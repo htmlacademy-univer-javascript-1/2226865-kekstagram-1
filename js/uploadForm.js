@@ -1,4 +1,5 @@
 import {form, hashtagsInput, imgDescriptionInput, validateForm} from './uploadFormValidation.js';
+import {sendFormAsync} from './network.js';
 import './photoEffects.js';
 import './photoScaling.js';
 
@@ -9,9 +10,12 @@ const imgEditBlock = document.querySelector('.img-upload__overlay');
 const closeFormButton = document.querySelector('#upload-cancel');
 
 form.addEventListener('submit', (evt) => {
+  evt.preventDefault();
   if (!validateForm()) {
-    evt.preventDefault();
+    return;
   }
+  sendFormAsync(new FormData(evt.target));
+  closeForm();
 });
 
 uploadPhotoInput.addEventListener('change', () => {

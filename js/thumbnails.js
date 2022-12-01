@@ -1,4 +1,3 @@
-import {createPosts} from './data.js';
 import {adjustDisplayingAsBigPicture} from './bigpicture.js';
 
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -14,14 +13,13 @@ function createThumbnail(post) {
   return thumbnail;
 }
 
-const renderThumbnails = () => {
-  for (const post of createPosts()) {
+const renderThumbnails = (posts) => {
+  for (const post of posts) {
     const thumbnail = createThumbnail(post);
     adjustDisplayingAsBigPicture(thumbnail, post);
     picturesContainer.appendChild(thumbnail);
   }
   picturesBlock.appendChild(picturesContainer);
 };
-
 
 export {renderThumbnails};
