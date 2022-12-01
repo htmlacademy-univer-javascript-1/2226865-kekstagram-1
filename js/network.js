@@ -1,18 +1,20 @@
 import {showError} from './networkErrors.js';
 
 const SERVER_ADDRESS = 'https://26.javascript.pages.academy/kekstagram/data';
+const LOAD_POSTS_ERROR_MESSAGE = 'Ошибка загрузки фотографий';
+
 
 function receivePostsAsync(receivePostsFun) {
   fetch(SERVER_ADDRESS)
-    .catch((reason) => showError(reason))
     .then((response) => {
       if (response.ok) {
         return response.json();
       }
-      throw new Error(`${response.status} ${response.statusText}`);
+      showError(LOAD_POSTS_ERROR_MESSAGE, `${response.status} ${response.statusText}`);
+      return [];
     })
-    .catch((reason) => showError('Ошибка загрузки фотографий', reason))
-    .then((posts) => receivePostsFun(posts));
+    .then((posts) => receivePostsFun(posts))
+    .catch((reason) => showError(LOAD_POSTS_ERROR_MESSAGE, reason));
 }
 
 export {receivePostsAsync};
