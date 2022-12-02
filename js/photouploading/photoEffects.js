@@ -1,9 +1,9 @@
-import '../nouislider/nouislider.js';
+import '../../nouislider/nouislider.js';
+import {form, imagePreview} from './common.js';
 
-const form = document.querySelector('.img-upload__form');
 const slider = form.querySelector('.effect-level__slider');
 const effectLevel = form.querySelector('.effect-level__value');
-const imgPreview = form.querySelector('.img-upload__preview');
+
 const effectInfos = {
   'chrome': makeEffectInfo('chrome', 'grayscale', '', 0, 1, 0, 0.1),
   'sepia': makeEffectInfo('sepia', 'sepia', '', 0, 1, 0, 0.1),

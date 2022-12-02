@@ -1,5 +1,6 @@
-import {form, hashtagsInput, imgDescriptionInput, validateForm, validateFile} from './uploadFormValidation.js';
-import {sendFormAsync} from './network.js';
+import {form} from './common.js';
+import {hashtagsInput, imgDescriptionInput, validateForm, validateFile} from './validation.js';
+import {sendFormAsync} from '../network.js';
 import {showError} from './notification.js';
 import {resetEffects} from './photoEffects.js';
 import {resetScale} from './photoScaling.js';
