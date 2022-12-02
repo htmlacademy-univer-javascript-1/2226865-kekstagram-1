@@ -9,6 +9,25 @@ function random(min, max) {
   return Math.floor(result);
 }
 
+function debounce(callback, timeoutDelay = 500) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+function throttle(callback, delayBetweenFrames) {
+  let lastTime = 0;
+  return (...rest) => {
+    const now = new Date();
+    if (now - lastTime >= delayBetweenFrames) {
+      callback.apply(this, rest);
+      lastTime = now;
+    }
+  };
+}
+
 function stringByPattern(pattern, i) {
   const leftBracket = pattern.indexOf('{');
   const rightBracket = pattern.lastIndexOf('}');
@@ -19,4 +38,4 @@ function checkStringLength(string, maxLength) {
   return string.length <= maxLength;
 }
 
-export {randomArrayElement, random, stringByPattern, checkStringLength};
+export {randomArrayElement, random, stringByPattern, checkStringLength, throttle, debounce};
