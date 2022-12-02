@@ -1,4 +1,5 @@
 import {adjustDisplayingAsBigPicture} from './bigpicture.js';
+import {adjustRenderFiltering} from './thumbnailsFiltering.js';
 
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const picturesBlock = document.querySelector('.pictures');
@@ -13,13 +14,19 @@ function createThumbnail(post) {
   return thumbnail;
 }
 
-const renderThumbnails = (posts) => {
+function doRendering(posts) {
+  picturesBlock.querySelectorAll('.picture').forEach((picture) => picture.remove());
   for (const post of posts) {
     const thumbnail = createThumbnail(post);
     adjustDisplayingAsBigPicture(thumbnail, post);
     picturesContainer.appendChild(thumbnail);
   }
   picturesBlock.appendChild(picturesContainer);
-};
+}
 
-export {renderThumbnails};
+export function renderThumbnails(posts) {
+  doRendering(posts);
+  adjustRenderFiltering(posts, doRendering);
+}
+
+
