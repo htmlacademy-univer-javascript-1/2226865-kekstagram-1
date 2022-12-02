@@ -1,7 +1,8 @@
-import {randomElements} from './util.js';
+import {randomElements, debounce} from './util.js';
 
 const ACTIVE_FILTER_CLASS = 'img-filters__button--active';
 const INACTIVE_FILTERS_CLASS = 'img-filters--inactive';
+const RERENDER_DELAY = 500;
 
 const filtersBlock = document.querySelector('.img-filters');
 const filtersForm = filtersBlock.querySelector('.img-filters__form');
@@ -25,6 +26,7 @@ export function adjustRenderFiltering(posts, renderFun) {
       prevClickedButton.classList.remove(ACTIVE_FILTER_CLASS);
       clickedButton.classList.add(ACTIVE_FILTER_CLASS);
       prevClickedButton = clickedButton;
-      doFilteredRender[clickedButton.id](posts, renderFun);
+      const filteredRenderFun = doFilteredRender[clickedButton.id];
+      debounce(() => filteredRenderFun(posts, renderFun), RERENDER_DELAY);
     }));
 }
