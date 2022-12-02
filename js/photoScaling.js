@@ -23,8 +23,13 @@ function onScaleChange(scaleLimit, scaleToLimitComparator, scalingFun) {
   applyScale(scaleToLimitComparator(newScale, scaleLimit) > 0 ? scaleLimit : newScale);
 }
 
+export function resetScale() {
+  applyScale(100);
+}
+
 increaseScaleButton.addEventListener('click', () => onScaleChange(SCALE_MAX,
   (a, b) => a - b, (curScale, step) => curScale + step));
 
 decreaseScaleButton.addEventListener('click', () => onScaleChange(SCALE_MIN,
   (a, b) => b - a, (curScale, step) => curScale - step));
+

@@ -1,8 +1,8 @@
 import {form, hashtagsInput, imgDescriptionInput, validateForm, validateFile} from './uploadFormValidation.js';
 import {sendFormAsync} from './network.js';
 import {showError} from './notification.js';
-import './photoEffects.js';
-import './photoScaling.js';
+import {resetEffects} from './photoEffects.js';
+import {resetScale} from './photoScaling.js';
 
 const ESC_KEYCODE = 27;
 
@@ -45,5 +45,7 @@ function closeForm() {
   uploadPhotoInput.name = '';
   imgDescriptionInput.value = '';
   hashtagsInput.value = '';
+  resetEffects();
+  resetScale();
 }
 
