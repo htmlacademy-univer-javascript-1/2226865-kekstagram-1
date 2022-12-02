@@ -5,6 +5,7 @@ const form = document.querySelector('.img-upload__form');
 const hashtagsInput = document.querySelector('.text__hashtags');
 const imgDescriptionInput = document.querySelector('.text__description');
 
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 const HASHTAG_REGEXP = '#[A-Za-zА-Яа-яЁё0-9]{1,19}';
 
 const pristine = new Pristine(form, {
@@ -40,8 +41,12 @@ function validateHashtags(hashtagsString) {
   return hashtagsSet.size <= 5;
 }
 
+function validateFile(filename) {
+  return FILE_TYPES.some((filetype) => filename.endsWith(`.${filetype}`));
+}
+
 function validateForm() {
   return pristine.validate();
 }
 
-export {form, hashtagsInput, imgDescriptionInput, validateForm};
+export {form, hashtagsInput, imgDescriptionInput, validateForm, validateFile};
