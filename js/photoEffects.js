@@ -4,24 +4,22 @@ const form = document.querySelector('.img-upload__form');
 const slider = form.querySelector('.effect-level__slider');
 const effectLevel = form.querySelector('.effect-level__value');
 const imgPreview = form.querySelector('.img-upload__preview');
-
 const effectInfos = {
-  'chrome': makeEffectInfo('grayscale', '', 0, 1, 0, 0.1),
-  'sepia': makeEffectInfo('sepia', '', 0, 1, 0, 0.1),
-  'marvin': makeEffectInfo('invert', '%', 0, 100, 0.1, 1),
-  'phobos': makeEffectInfo('blur', 'px', 0, 3, 0, 0.1),
-  'heat': makeEffectInfo('brightness', '', 1, 3, 1, 0.1)
+  'chrome': makeEffectInfo('chrome', 'grayscale', '', 0, 1, 0, 0.1),
+  'sepia': makeEffectInfo('sepia', 'sepia', '', 0, 1, 0, 0.1),
+  'marvin': makeEffectInfo('marvin', 'invert', '%', 0, 100, 0.1, 1),
+  'phobos': makeEffectInfo('phobos', 'blur', 'px', 0, 3, 0, 0.1),
+  'heat': makeEffectInfo('heat', 'brightness', '', 1, 3, 1, 0.1),
+  'none': makeEffectInfo('none', 'none', '', 0, 0, 0, 0)
 };
 
 slider.classList.add('hidden');
-let currentEffectClass = 'effects__preview--none';
-let currentEffectInfo = effectInfos['chrome']; //does not matter, slider is hidden
+let currentEffectInfo = effectInfos['none'];
 noUiSlider.create(slider, currentEffectInfo.sliderOptions);
 
 slider.noUiSlider.on('update', () => {
   const value = slider.noUiSlider.get();
-  const filterInfo = currentEffectInfo.filterInfo;
-  imgPreview.style.filter = styleForFilter(filterInfo, value);
+  imgPreview.style.filter = currentEffectInfo.getStyle(value);
   effectLevel.value = value.toString();
 });
 
@@ -30,41 +28,29 @@ form.addEventListener('change', (evt) => {
     return;
   }
   const newEffect = evt.target.value;
-  changeEffectClass(newEffect);
-  if (newEffect === 'none') {
-    imgPreview.style.filter = 'none';
-    slider.classList.add('hidden');
-    return;
-  }
-  currentEffectInfo = effectInfos[newEffect];
-  slider.noUiSlider.updateOptions(effectInfos[newEffect].sliderOptions);
-  if (slider.classList.contains('hidden')) {
-    slider.classList.remove('hidden');
-  }
+  changeEffect(newEffect);
 });
 
-function styleForFilter(filterInfo, value) {
-  return `${filterInfo.filterName}(${value}${filterInfo.valueUnit})`;
+function changeEffect(newEffect) {
+  imgPreview.classList.remove(currentEffectInfo.effectClass);
+  if (newEffect === 'none') {
+    slider.classList.add('hidden');
+  } else {
+    slider.classList.remove('hidden');
+  }
+  currentEffectInfo = effectInfos[newEffect];
+  imgPreview.classList.add(currentEffectInfo.effectClass);
+  slider.noUiSlider.updateOptions(currentEffectInfo.sliderOptions);
+  slider.noUiSlider.set(currentEffectInfo.sliderOptions.start);
 }
 
-function changeEffectClass(newEffectName) {
-  const newEffectClass = `effects__preview--${newEffectName}`;
-  imgPreview.classList.remove(currentEffectClass);
-  imgPreview.classList.add(newEffectClass);
-  currentEffectClass = newEffectClass;
-}
-
-function makeEffectInfo(filterName, filterValueUnit, sliderMin, sliderMax, sliderStart, sliderStep) {
+function makeEffectInfo(effectName, styleName, styleValueUnit, sliderMin, sliderMax, sliderStart, sliderStep) {
   return {
-    filterInfo: makeFilterInfo(filterName, filterValueUnit),
-    sliderOptions: makeSliderOptions(sliderMin, sliderMax, sliderStart, sliderStep)
-  };
-}
-
-function makeFilterInfo(filterName, valueUnit) {
-  return {
-    filterName: filterName,
-    valueUnit: valueUnit,
+    effectClass: `effects__preview--${effectName}`,
+    sliderOptions: makeSliderOptions(sliderMin, sliderMax, sliderStart, sliderStep),
+    getStyle(value) {
+      return `${styleName}(${value}${styleValueUnit}`;
+    },
   };
 }
 
@@ -77,4 +63,7 @@ function makeSliderOptions(min, max, start, step) {
   };
 }
 
+export function resetEffects() {
+  changeEffect('none');
+}
 
