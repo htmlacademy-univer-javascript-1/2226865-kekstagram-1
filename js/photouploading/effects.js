@@ -19,7 +19,7 @@ noUiSlider.create(slider, currentEffectInfo.sliderOptions);
 
 slider.noUiSlider.on('update', () => {
   const value = slider.noUiSlider.get();
-  imgPreview.style.filter = currentEffectInfo.getStyle(value);
+  imagePreview.style.filter = currentEffectInfo.getStyle(value);
   effectLevel.value = value.toString();
 });
 
@@ -32,14 +32,14 @@ form.addEventListener('change', (evt) => {
 });
 
 function changeEffect(newEffect) {
-  imgPreview.classList.remove(currentEffectInfo.effectClass);
+  imagePreview.classList.remove(currentEffectInfo.effectClass);
   if (newEffect === 'none') {
     slider.classList.add('hidden');
   } else {
     slider.classList.remove('hidden');
   }
   currentEffectInfo = effectInfos[newEffect];
-  imgPreview.classList.add(currentEffectInfo.effectClass);
+  imagePreview.classList.add(currentEffectInfo.effectClass);
   slider.noUiSlider.updateOptions(currentEffectInfo.sliderOptions);
   slider.noUiSlider.set(currentEffectInfo.sliderOptions.start);
 }

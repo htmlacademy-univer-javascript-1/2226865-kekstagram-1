@@ -1,16 +1,15 @@
-import {form} from './common.js';
+import {form, imagePreview} from './common.js';
 import {hashtagsInput, imgDescriptionInput, validateForm, validateFile} from './validation.js';
+import {resetEffects} from './effects.js';
+import {resetScale} from './scaling.js';
 import {sendFormAsync} from '../network.js';
-import {showError} from './notification.js';
-import {resetEffects} from './photoEffects.js';
-import {resetScale} from './photoScaling.js';
+import {showError} from '../notification.js';
 
 const ESC_KEYCODE = 27;
 
-const imgPreview = form.querySelector('.img-upload__preview > img');
-const uploadPhotoInput = document.querySelector('#upload-file');
-const imgEditBlock = document.querySelector('.img-upload__overlay');
-const closeFormButton = document.querySelector('#upload-cancel');
+const fileChooser = document.querySelector('#upload-file');
+const imgEditBlock = form.querySelector('.img-upload__overlay');
+const closeFormButton = form.querySelector('#upload-cancel');
 
 form.addEventListener('submit', (evt) => {
   evt.preventDefault();
@@ -21,13 +20,13 @@ form.addEventListener('submit', (evt) => {
   closeForm();
 });
 
-uploadPhotoInput.addEventListener('change', () => {
-  const file = uploadPhotoInput.files[0];
+fileChooser.addEventListener('change', () => {
+  const file = fileChooser.files[0];
   if (!validateFile(file.name)) {
     showError('Некорректный формат файла', file.name);
     return;
   }
-  imgPreview.src = URL.createObjectURL(file);
+  imagePreview.src = URL.createObjectURL(file);
   imgEditBlock.classList.remove('hidden');
   document.body.classList.add('modal-open');
 });
@@ -43,7 +42,7 @@ document.addEventListener('keydown', (evt) => {
 function closeForm() {
   document.body.classList.remove('modal-open');
   imgEditBlock.classList.add('hidden');
-  uploadPhotoInput.name = '';
+  fileChooser.value = '';
   imgDescriptionInput.value = '';
   hashtagsInput.value = '';
   resetEffects();

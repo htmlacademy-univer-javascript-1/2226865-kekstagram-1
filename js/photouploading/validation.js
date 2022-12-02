@@ -2,11 +2,11 @@ import {form} from './common.js';
 import {checkStringLength} from '../util.js';
 import '../../pristine/pristine.min.js';
 
-const hashtagsInput = document.querySelector('.text__hashtags');
-const imgDescriptionInput = document.querySelector('.text__description');
-
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 const HASHTAG_REGEXP = '#[A-Za-zА-Яа-яЁё0-9]{1,19}';
+
+const hashtagsInput = document.querySelector('.text__hashtags');
+const imgDescriptionInput = document.querySelector('.text__description');
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
