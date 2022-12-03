@@ -21,10 +21,13 @@ closeErrorButton.addEventListener('click', () => {
   errorBlock.classList.add('hidden');
 });
 
-export function showError(message, reason) {
+export function showError(message, reason, callback) {
   errorBlock.classList.remove('hidden');
   errorMessage.textContent = message;
   errorReason.textContent = reason === undefined ? '' : reason;
+  if (callback !== undefined) {
+    callback();
+  }
 }
 
 export function showSuccess() {
