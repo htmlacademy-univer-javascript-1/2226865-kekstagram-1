@@ -1,6 +1,7 @@
 import '../../nouislider/nouislider.js';
 import {form, imagePreview} from './common.js';
 
+const defaultButton = document.querySelector('#effect-none');
 const slider = form.querySelector('.effect-level__slider');
 const effectLevel = form.querySelector('.effect-level__value');
 
@@ -64,6 +65,6 @@ function makeSliderOptions(min, max, start, step) {
 }
 
 export function resetEffects() {
-  changeEffect('none');
+  defaultButton.click();
 }
 
