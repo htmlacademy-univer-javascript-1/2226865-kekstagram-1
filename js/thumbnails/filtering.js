@@ -1,4 +1,4 @@
-import {randomElements, debounce} from './util.js';
+import {randomElements, debounce} from '../util.js';
 
 const ACTIVE_FILTER_CLASS = 'img-filters__button--active';
 const INACTIVE_FILTERS_CLASS = 'img-filters--inactive';
@@ -18,7 +18,7 @@ const doFilteredRender = {
 
 let prevClickedButton = defaultFilterButton;
 
-export function adjustRenderFiltering(posts, renderFun) {
+export function adjustFiltering(posts, renderFun) {
   filtersBlock.classList.remove(INACTIVE_FILTERS_CLASS);
   buttons.forEach((button) =>
     button.addEventListener('click', (evt) => {
