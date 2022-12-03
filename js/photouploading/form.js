@@ -2,22 +2,35 @@ import {form, imagePreview} from './common.js';
 import {hashtagsInput, imgDescriptionInput, validateForm, validateFile} from './validation.js';
 import {resetEffects} from './effects.js';
 import {resetScale} from './scaling.js';
-import {sendFormAsync} from '../network.js';
-import {showError} from '../notification.js';
+import {sendPostAsync} from '../network.js';
+import {showError, showSuccess} from '../notification.js';
 
+const SERVER_URL = 'https://26.javascript.pages.academy/kekstagram';
+const UPLOAD_POST_ERROR_MESSAGE = 'Ошибка загрузки фотографии';
 const ESC_KEYCODE = 27;
 
 const fileChooser = document.querySelector('#upload-file');
 const imgEditBlock = form.querySelector('.img-upload__overlay');
 const closeFormButton = form.querySelector('#upload-cancel');
+const submitButton = form.querySelector('#upload-submit');
 
 form.addEventListener('submit', (evt) => {
   evt.preventDefault();
   if (!validateForm()) {
     return;
   }
-  sendFormAsync(new FormData(evt.target));
-  closeForm();
+  submitButton.setAttribute('disabled', '');
+  sendPostAsync(
+    SERVER_URL,
+    new FormData(evt.target),
+    () => {
+      closeForm();
+      showSuccess();
+    },
+    (reason) => showError(UPLOAD_POST_ERROR_MESSAGE, reason),
+    () => {
+      submitButton.removeAttribute('disabled');
+    });
 });
 
 fileChooser.addEventListener('change', () => {
