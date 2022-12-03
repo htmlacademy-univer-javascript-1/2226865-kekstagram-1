@@ -27,7 +27,10 @@ form.addEventListener('submit', (evt) => {
       closeForm();
       showSuccess();
     },
-    (reason) => showError(UPLOAD_POST_ERROR_MESSAGE, reason),
+    (reason) => {
+      closeForm(false);
+      showError(UPLOAD_POST_ERROR_MESSAGE, reason, showForm);
+    },
     () => {
       submitButton.removeAttribute('disabled');
     });
@@ -40,8 +43,7 @@ fileChooser.addEventListener('change', () => {
     return;
   }
   imagePreview.src = URL.createObjectURL(file);
-  imgEditBlock.classList.remove('hidden');
-  document.body.classList.add('modal-open');
+  showForm();
 });
 
 closeFormButton.addEventListener('click', closeForm);
@@ -52,9 +54,17 @@ document.addEventListener('keydown', (evt) => {
   }
 });
 
-function closeForm() {
+function showForm() {
+  imgEditBlock.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+}
+
+function closeForm(reset = true) {
   document.body.classList.remove('modal-open');
   imgEditBlock.classList.add('hidden');
+  if (!reset) {
+    return;
+  }
   fileChooser.value = '';
   imgDescriptionInput.value = '';
   hashtagsInput.value = '';
