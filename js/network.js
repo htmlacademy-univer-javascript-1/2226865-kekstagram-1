@@ -1,42 +1,35 @@
-import {showError, showSuccess} from './notification.js';
-
-const SERVER_LOAD_FROM = 'https://26.javascript.pages.academy/kekstagram/data';
-const SERVER_UPLOAD_TO = 'https://26.javascript.pages.academy/kekstagram';
-const LOAD_POSTS_ERROR_MESSAGE = 'Ошибка загрузки фотографий';
-const UPLOAD_POST_ERROR_MESSAGE = 'Ошибка загрузки фотографии';
-
-
-function receivePostsAsync(receivePostsFun) {
-  fetch(SERVER_LOAD_FROM)
+function sendGetAsync(serverUrl, handleJson, handleFailMessage) {
+  fetch(serverUrl)
     .then((response) => {
       if (response.ok) {
         return response.json();
       }
-      showError(LOAD_POSTS_ERROR_MESSAGE, reasonFromResponse(response));
+      handleFailMessage(reasonFromResponse(response));
       return [];
     })
-    .then((posts) => receivePostsFun(posts))
-    .catch((reason) => showError(LOAD_POSTS_ERROR_MESSAGE, reason));
+    .then(handleJson)
+    .catch((reason) => handleFailMessage(reason));
 }
 
-function sendFormAsync(formData) {
-  fetch(SERVER_UPLOAD_TO,
+function sendPostAsync(serverUrl, body, handleSuccess, handleFailMessage, handleFinally) {
+  fetch(serverUrl,
     {
       method: 'POST',
-      body: formData
+      body: body
     })
     .then((response) => {
       if (response.ok) {
-        showSuccess();
+        handleSuccess();
       } else {
-        showError(UPLOAD_POST_ERROR_MESSAGE, reasonFromResponse(response));
+        handleFailMessage(reasonFromResponse(response));
       }
     })
-    .catch((reason) => showError(UPLOAD_POST_ERROR_MESSAGE, reason));
+    .catch((reason) => handleFailMessage(reason))
+    .finally(handleFinally);
 }
 
 function reasonFromResponse(response) {
   return `${response.status} ${response.statusText}`;
 }
 
-export {receivePostsAsync, sendFormAsync};
+export {sendGetAsync, sendPostAsync};
