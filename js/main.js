@@ -1,5 +1,5 @@
-import {receivePostsAsync} from './network.js';
-import {renderThumbnails} from './thumbnails.js';
-import './uploadForm.js';
+import './photouploading/form.js';
+import {loadThumbnails} from './thumbnails/loading.js';
 
-receivePostsAsync(renderThumbnails);
+loadThumbnails();
+
