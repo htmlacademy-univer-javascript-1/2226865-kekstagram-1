@@ -11,7 +11,7 @@ const effectInfos = {
   'marvin': makeEffectInfo('marvin', 'invert', '%', 0, 100, 0.1, 1),
   'phobos': makeEffectInfo('phobos', 'blur', 'px', 0, 3, 0, 0.1),
   'heat': makeEffectInfo('heat', 'brightness', '', 1, 3, 1, 0.1),
-  'none': makeEffectInfo('none', 'none', '', 0, 0, 0, 0)
+  'none': makeEffectInfo('none', 'grayscale', '', 0, 0, 0, 0)
 };
 
 slider.classList.add('hidden');

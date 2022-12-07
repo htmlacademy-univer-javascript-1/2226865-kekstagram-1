@@ -39,7 +39,8 @@ form.addEventListener('submit', (evt) => {
 fileChooser.addEventListener('change', () => {
   const file = fileChooser.files[0];
   if (!validateFile(file.name)) {
-    showError('Некорректный формат файла', file.name);
+    const point = file.name.lastIndexOf('.');
+    showError('Некорректный формат файла', file.name.substring(point));
     return;
   }
   imagePreview.src = URL.createObjectURL(file);
