@@ -8,11 +8,6 @@ const pictureImg = bigPicture.querySelector('.big-picture__img').querySelector('
 const pictureLikesCount = bigPicture.querySelector('.likes-count');
 const pictureDescription = bigPicture.querySelector('.social__caption');
 
-const closeBigPicture = () => {
-  document.body.classList.remove('modal-open');
-  bigPicture.classList.add('hidden');
-};
-
 closePictureButton.addEventListener('click', closeBigPicture);
 document.addEventListener('keydown', (evt) => {
   if (evt.keyCode === ESC_KEYCODE) {
@@ -20,8 +15,12 @@ document.addEventListener('keydown', (evt) => {
   }
 });
 
-//TODO fix creating listener for every photo
-const adjustDisplayingAsBigPicture = (picture, post) =>
+function closeBigPicture() {
+  document.body.classList.remove('modal-open');
+  bigPicture.classList.add('hidden');
+}
+
+function adjustDisplayingAsBigPicture(picture, post) {
   picture.addEventListener('click', () => {
     pictureImg.setAttribute('src', post.url);
     pictureLikesCount.textContent = post.likes;
@@ -30,6 +29,6 @@ const adjustDisplayingAsBigPicture = (picture, post) =>
     bigPicture.classList.remove('hidden');
     document.body.classList.add('modal-open');
   });
+}
 
 export {adjustDisplayingAsBigPicture};
-
